@@ -1,3 +1,7 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 /**
  * Represents a date and time object to store and convert
  * date and time to a pleasant format e.g., 12/11/2019 1700
@@ -25,7 +29,15 @@ public class DateTime {
         String[] splitDate = splitDateAndTime[0].split("/");
         String day = splitDate[0];
         String month = splitDate[1];
-        String year = splitDate[2];
+        final String year = splitDate[2];
+
+        try {
+            String dateStr = splitDateAndTime[0];
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+            LocalDateTime date = LocalDateTime.parse(dateStr, formatter);
+        } catch (DateTimeParseException e) {
+            throw new InvalidInputException("OOPS!!! The Date field is invalid");
+        }
 
         if (day.equals("1") || day.equals("21") || day.equals("31")) {
             day = day + "st";
@@ -75,7 +87,7 @@ public class DateTime {
             month = "December";
             break;
         default:
-            throw new InvalidInputException("☹ OOPS!!! The Date/Time field is invalid");
+            throw new InvalidInputException("OOPS!!! The Date/Time field is invalid");
         }
 
         this.date = day + " " + month + " " + year;

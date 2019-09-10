@@ -70,7 +70,7 @@ public class Ui {
             } catch (DukeException ex) {
                 return ex.getMessage();
             } catch (ParseException ex) {
-                return "☹ OOPS!!! The Date/Time field is invalid";
+                return "OOPS!!! The Date/Time field is invalid";
             }
 
             if (userInput.startsWith("find")) {
@@ -96,7 +96,7 @@ public class Ui {
                 } catch (DukeException ex) {
                     return ex.getMessage();
                 } catch (ParseException ex) {
-                    return "☹ OOPS!!! The Date/Time field is invalid";
+                    return "OOPS!!! The Date/Time field is invalid";
                 }
             } else if (userInput.startsWith("event")) {
                 String description = userInput.substring(6, userInput.indexOf('/') - 1);
@@ -107,7 +107,7 @@ public class Ui {
                 } catch (DukeException ex) {
                     return ex.getMessage();
                 } catch (ParseException ex) {
-                    return "☹ OOPS!!! The Date/Time field is invalid";
+                    return "OOPS!!! The Date/Time field is invalid";
                 }
             } else {
                 return "Something went wrong";

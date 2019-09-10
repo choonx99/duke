@@ -43,12 +43,13 @@ public class Storage {
                     todo.markAsDone();
                     taskList.add(todo);
                 }
-            } else if (taskType == 'D') {
+            } else {
                 String date = "";
                 String time = "";
                 String description = line.substring(7, line.indexOf('(') - 1);
                 String by = line.substring(line.indexOf(':') + 2, line.indexOf(')')).trim();
                 String[] dateTimeSplit = by.split(" ");
+
                 if (dateTimeSplit.length == 3) {
                     date = dateTimeSplit[0] + " " + dateTimeSplit[1] + " "
                                    + dateTimeSplit[2].substring(0, dateTimeSplit[2].length() - 1);
@@ -58,34 +59,16 @@ public class Storage {
                                    + dateTimeSplit[2].substring(0, dateTimeSplit[2].length() - 1);
                     time = dateTimeSplit[3];
                 }
-                Task deadline = new Deadline(description, new DateTime(date, time));
+
+                Task task = taskType == 'D'
+                    ? new Deadline(description, new DateTime(date, time))
+                    : new Event(description, new DateTime(date, time));
+
                 if (isDone == '0') {
-                    taskList.add(deadline);
+                    taskList.add(task);
                 } else {
-                    deadline.markAsDone();
-                    taskList.add(deadline);
-                }
-            } else if (taskType == 'E') {
-                String date = "";
-                String time = "";
-                String description = line.substring(7, line.indexOf('(') - 1);
-                String at = line.substring(line.indexOf(':') + 2, line.indexOf(')')).trim();
-                String[] dateTimeSplit = at.split(" ");
-                if (dateTimeSplit.length == 3) {
-                    date = dateTimeSplit[0] + " " + dateTimeSplit[1] + " "
-                                   + dateTimeSplit[2].substring(0, dateTimeSplit[2].length() - 1);
-                    time = "";
-                } else if (dateTimeSplit.length == 4) {
-                    date = dateTimeSplit[0] + " " + dateTimeSplit[1] + " "
-                                   + dateTimeSplit[2].substring(0, dateTimeSplit[2].length() - 1);
-                    time = dateTimeSplit[3];
-                }
-                Task event = new Event(description, new DateTime(date, time));
-                if (isDone == '0') {
-                    taskList.add(event);
-                } else {
-                    event.markAsDone();
-                    taskList.add(event);
+                    task.markAsDone();
+                    taskList.add(task);
                 }
             }
         }
